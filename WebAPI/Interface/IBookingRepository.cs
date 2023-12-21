@@ -2,15 +2,14 @@
 
 namespace WebAPI.Interface
 {
-    public interface IBookingController
+    public interface IBookingRepository
     {
-
         ICollection<Booking> GetBookings();
         Booking GetBooking(int id);
         bool BookingExists(int id);
 
-        //POST
+        bool CreateBooking(int showId, Booking booking);
 
-
+        bool Save();
     }
 }

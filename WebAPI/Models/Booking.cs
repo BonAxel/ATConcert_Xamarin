@@ -7,10 +7,5 @@
         public string CustomerEmail { get; set; }
         public Show Show { get; set; }
 
-
-
-
-
-
     }
 }

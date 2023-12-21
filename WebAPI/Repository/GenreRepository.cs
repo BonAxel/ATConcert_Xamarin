@@ -12,21 +12,19 @@ namespace WebAPI.Repository
         {
             _context = context;
         }
-
-
         public bool GenreExists(int id)
         {
-            throw new NotImplementedException();
+            return _context.Genres.Any(e => e.GenreId == id);
         }
 
         public Genre GetGenre(int id)
         {
-            throw new NotImplementedException();
+            return _context.Genres.Where(e => e.GenreId == id).FirstOrDefault();
         }
 
         public ICollection<Genre> GetGenres()
         {
-            throw new NotImplementedException();
+            return _context.Genres.ToList();
         }
     }
 }
