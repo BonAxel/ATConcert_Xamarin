@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using WebAPI.Data;
 using WebAPI.Data.Seed;
 using WebAPI.Interface;
 using WebAPI.Repository;
@@ -7,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-
 builder.Services.AddTransient<Seed>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IShowRepository, ShowRepository>();
@@ -15,25 +16,33 @@ builder.Services.AddScoped<IShowRepository, ShowRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); ;
 
 var app = builder.Build();
 
 
 
-
-if (args.Length == 1 && args[0].ToLower() == "seeddata")
-    SeedData(app);
-
-void SeedData(IHost app)
+using (var scope = app.Services.CreateScope())
 {
-    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-    using (var scope = scopedFactory.CreateScope())
-    {
-        var service = scope.ServiceProvider.GetService<Seed>();
-        service.SeedDataContext();
-    }
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DataContext>();
+    Seed.SeedDataContext(context);
 }
+
+//if (args.Length == 1 && args[0].ToLower() == "seeddata")
+//    SeedData(app);
+
+//void SeedData(IHost app)
+//{
+//    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+
+//    using (var scope = scopedFactory.CreateScope())
+//    {
+//        var service = scope.ServiceProvider.GetService<Seed>();
+//        service.SeedDataContext();
+//    }
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

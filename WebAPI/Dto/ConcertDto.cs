@@ -1,8 +1,6 @@
-﻿using WebAPI.Models.Junctions;
-
-namespace WebAPI.Models
+﻿namespace WebAPI.Dto
 {
-    public class Concert
+    public class ConcertDto
     {
         public int ConcertId { get; set; }
         public string Title { get; set; }
@@ -10,9 +8,5 @@ namespace WebAPI.Models
         public int Length { get; set; }
         public float Price { get; set; }
 
-        public ICollection<ConcertGenres> ConcertGenres { get; set; }
-        //public ICollection<Show> Shows { get; set; }
-        
-      
     }
 }

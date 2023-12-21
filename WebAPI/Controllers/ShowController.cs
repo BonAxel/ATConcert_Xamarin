@@ -21,10 +21,9 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Show>))]
-        public IActionResult GetPokemons()
+        public IActionResult GetShows()
         {
             var show = _mapper.Map<List<ShowDto>>(_showRepository.GetShows());
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -32,18 +31,18 @@ namespace WebAPI.Controllers
             return Ok(show);
         }
 
-        [HttpGet("{pokeId}")]
+        [HttpGet("{showId}")]
         [ProducesResponseType(200, Type = typeof(Show))]
         [ProducesResponseType(400)]
-        public IActionResult GetPokemon(int pokeId)
+        public IActionResult GetShow(int showId)
         {
-            if (!_showRepository.ShowExists(pokeId)) return NotFound();
+            if (!_showRepository.ShowExists(showId)) return NotFound();
 
-            var pokemon = _mapper.Map<Show>(_showRepository.GetShow(pokeId));
+            var show = _mapper.Map<Show>(_showRepository.GetShow(showId));
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(pokemon);
+            return Ok(show);
         }
     }
 }
