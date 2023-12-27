@@ -84,6 +84,19 @@
     <FlyoutItem Title="Browse" Icon="icon_feed.png">
         <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Booking" Icon="icon_feed.png">
+        <ShellContent Route="BookingPage" ContentTemplate="{DataTemplate local:BookingPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Concerts" Icon="icon_feed.png">
+        <ShellContent Route="ConcertPage" ContentTemplate="{DataTemplate local:ConcertPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="ConcertDetails" Icon="icon_feed.png">
+        <ShellContent Route="ConcertDetailsPage" ContentTemplate="{DataTemplate local:ConcertDetailsPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Genrefilter" Icon="icon_feed.png">
+        <ShellContent Route="GenreFilterPage" ContentTemplate="{DataTemplate local:GenreFilterPage}" />
+    </FlyoutItem>
+
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">

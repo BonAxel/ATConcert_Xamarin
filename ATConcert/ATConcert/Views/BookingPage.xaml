@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ATConcert.Views.BookingPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Entry x:Name="CustomerNameEntry"
+               Placeholder="Ditt namn" />
+            <Entry x:Name="CustomerEmailEntry"
+               Placeholder="Din e-post" Keyboard="Email" />
+            <Button Text="Bekräfta bokning" Command="{Binding ConfirmBookingCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
