@@ -15,7 +15,7 @@ namespace ATConcert.Views
         public NewItemPage()
         {
             InitializeComponent();
-            BindingContext = new NewItemViewModel();
+            //BindingContext = new NewItemViewModel();
         }
     }
 }

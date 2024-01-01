@@ -10,7 +10,7 @@ namespace ATConcert.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore<Concert> DataStore => DependencyService.Get<IDataStore<Concert>>();
 
         bool isBusy = false;
         public bool IsBusy

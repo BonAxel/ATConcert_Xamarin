@@ -27,16 +27,15 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Concert>))]
-        public IActionResult GetConcert()
+        public IActionResult GetConcerts()
         {
             var concert = _mapper.Map<List<ConcertDto>>(_concertRepository.GetConcerts());
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
             return Ok(concert);
         }
 
 
-        [HttpGet("{genreId}")]
+        [HttpGet("{concertId}")]
         [ProducesResponseType(200, Type = typeof(Concert))]
         [ProducesResponseType(400)]
         public IActionResult GetConcert(int concertId)

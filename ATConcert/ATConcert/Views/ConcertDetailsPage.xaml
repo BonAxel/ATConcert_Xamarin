@@ -3,12 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ATConcert.Views.ConcertDetailsPage">
     <ContentPage.Content>
-        <StackLayout Padding="10">
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Title:" FontSize="Medium"></Label>
             <Label Text="{Binding Title}" FontSize="Medium" />
+            <Label Text="Description:" FontSize="Medium" />
             <Label Text="{Binding Description}" />
+            <Label Text="Length:" FontSize="Medium" />
             <Label Text="{Binding Length}" />
+            <Label Text="Price:" FontSize="Medium" />
             <Label Text="{Binding Price}" />
-
             <Button Text="Boka" Command="{Binding BookCommand}" />
             <Button Text="Avboka" Command="{Binding CancelBookingCommand}" IsVisible="{Binding IsBooked}" />
         </StackLayout>
