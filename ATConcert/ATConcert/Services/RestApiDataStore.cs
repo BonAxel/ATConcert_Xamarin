@@ -11,13 +11,16 @@ namespace ATConcert.Services
     public class RestApiDataStore : IRestApiDataStore<Concert>
     {
         //OBS. Const = Används för ett värde som inte ska modifieras under kod. SMORT! 
-        private const string ApiBaseUrl = "https://localhost:7298/api/";
+        private static readonly Uri ApiBaseUrl = new Uri("https://77.238.60.113:7298/api/");
 
         private readonly HttpClient httpClient;
 
         public RestApiDataStore()
         {
-            httpClient = new HttpClient();
+            httpClient = new HttpClient(GetInsecureHandler())
+            {
+                BaseAddress = ApiBaseUrl
+            };
         }
         public async Task<bool> AddConcertAsync(Concert concert)
         {
@@ -55,7 +58,10 @@ namespace ATConcert.Services
 
         public async Task<IEnumerable<Concert>> GetConcertsAsync(bool forceRefresh = false)
         {
-            var response = await httpClient.GetAsync($"https://localhost:7298/api/Concert/GetConcerts");
+            HttpClient test = new HttpClient();
+
+
+            var response = await httpClient.GetAsync($"https://10.0.2.2:7298/api/Concert/GetConcerts");
 
             if (response.IsSuccessStatusCode)
             {
@@ -64,6 +70,20 @@ namespace ATConcert.Services
             }
 
             return null;
+        }
+
+        // This method must be in a class in a platform project, even if
+        // the HttpClient object is constructed in a shared project.
+        public HttpClientHandler GetInsecureHandler()
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+            {
+                if (cert.Issuer.Equals("CN=localhost"))
+                    return true;
+                return errors == System.Net.Security.SslPolicyErrors.None;
+            };
+            return handler;
         }
     }
 }

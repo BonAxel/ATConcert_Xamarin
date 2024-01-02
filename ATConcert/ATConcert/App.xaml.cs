@@ -1,6 +1,7 @@
 ﻿using ATConcert.Services;
 using ATConcert.Views;
 using System;
+using System.Net;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,6 +20,9 @@ namespace ATConcert
 
         protected override void OnStart()
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
+            base.OnStart();
         }
 
         protected override void OnSleep()

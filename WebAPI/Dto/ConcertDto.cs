@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Dto
+﻿using WebAPI.Models.Junctions;
+
+namespace WebAPI.Dto
 {
     public class ConcertDto
     {
@@ -7,6 +9,6 @@
         public string Description { get; set; }
         public int Length { get; set; }
         public float Price { get; set; }
-
+        
     }
 }

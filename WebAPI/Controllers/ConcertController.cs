@@ -4,6 +4,7 @@ using System;
 using WebAPI.Dto;
 using WebAPI.Interface;
 using WebAPI.Models;
+using WebAPI.Models.Junctions;
 using WebAPI.Repository;
 
 namespace WebAPI.Controllers
@@ -30,6 +31,7 @@ namespace WebAPI.Controllers
         public IActionResult GetConcerts()
         {
             var concert = _mapper.Map<List<ConcertDto>>(_concertRepository.GetConcerts());
+
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(concert);
         }
