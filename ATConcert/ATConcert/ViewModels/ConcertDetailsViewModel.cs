@@ -79,7 +79,7 @@ namespace ATConcert.ViewModels
             if (show == null)
                 return;
 
-            //await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(BookingsViewModel.ShowId)}={show.ShowId}");
+            await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(BookingViewModel.ShowId)}={show.ShowId}");
         }
 
 
