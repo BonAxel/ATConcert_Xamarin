@@ -11,6 +11,7 @@ using ATConcert.Models.Junctions;
 using static ATConcert.ViewModels.ConcertDetailsViewModel;
 using ATConcert.Services;
 using static System.Net.Mime.MediaTypeNames;
+using Newtonsoft.Json;
 
 namespace ATConcert.ViewModels
 {
@@ -18,7 +19,7 @@ namespace ATConcert.ViewModels
     {
         private Concert _selectedConcert;
 
-        public RestApiDataStore _restApiDataStore;
+        public ConcertRestApiDataStore _concertRestApiDataStore;
         public ObservableCollection<Concert> Concerts { get; }
         public Command LoadConcertCommand { get; }
         public Command AddItemCommand { get; }
@@ -28,23 +29,17 @@ namespace ATConcert.ViewModels
         {
             Title = "Concerts";
             Concerts = new ObservableCollection<Concert>();
-            _restApiDataStore = new RestApiDataStore();
+            
+            _concertRestApiDataStore = new ConcertRestApiDataStore();
             LoadConcertCommand = new Command(async () => await ExecuteLoadConcertCommand());
             ConcertTapped = new Command<Concert>(OnConcertSelected);
-            //Concerts.Add(new Concert
-            //{
-            //    ConcertId = 1,
-            //    Title = "Slipknot",
-            //    Price = 130,
-            //    Length = 180,
-            //    Description = "Slipknot finaly arrives to Sweden, get your tickets now",
-            //    ConcertGenres = new List<ConcertGenres>()
-            //    {
-            //        new ConcertGenres { Genre = new Genre { Name = "Rock" } }
-            //    }
-            //});
+            LoadDataInitialy();
         }
 
+        public async void LoadDataInitialy()
+        {
+            await ExecuteLoadConcertCommand();
+        }
         //PROPERTY
         public Concert SelectedConcert
         {
@@ -61,8 +56,12 @@ namespace ATConcert.ViewModels
             if (concert == null)
                 return;
 
+            string serializedConcert = JsonConvert.SerializeObject(concert);
+
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.ConcertId)}={concert.ConcertId}");
+            await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.SerializedConcert)}={serializedConcert}");
+
+            //await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.ConcertId)}={concert.ConcertId}");
         }
 
 
@@ -75,8 +74,8 @@ namespace ATConcert.ViewModels
             {
                 Concerts.Clear();
                 //Hämtar data? --OBS DENNA SKA REFRESHA HÄMTANDE AV DATA
-                _restApiDataStore = new RestApiDataStore();
-                var concertList = await _restApiDataStore.GetConcertsAsync();
+                //_restApiDataStore = new RestApiDataStore();
+                var concertList = await _concertRestApiDataStore.GetConcertsAsync();
                 foreach (var concert in concertList) Concerts.Add(concert);
             }
             catch (Exception ex)

@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:ATConcert.ViewModels"  
              x:Class="ATConcert.Views.ConcertPage">
     <RefreshView Command="{Binding LoadConcertCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ConcerListView"
+        <CollectionView x:Name="ConcertListView"
                 ItemsSource="{Binding Concerts}"
                 SelectionMode="None">
             <CollectionView.ItemTemplate>

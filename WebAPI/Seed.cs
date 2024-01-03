@@ -10,48 +10,54 @@ namespace WebAPI.Data.Seed
         //{
         //    _context = context;
         //}
-        public  static void SeedDataContext(DataContext _context)
+        public static void SeedDataContext(DataContext _context)
         {
 
             _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
 
-            _context.Shows.Add(new Show
+            _context.Concerts.Add(new Concert
+
             {
-                Venue = "Venue 1",
-                DateTime = DateTime.Now,
-                Concert =
-                new Concert
+                Title = "Slipknot",
+                Price = 130,
+                Genre = "Rock",
+                Length = 180,
+                Description = "Slipknot finaly arrives to Sweden, get your tickets now",
+                Show = new List<Show>() { new Show
                 {
-                    Title = "Slipknot",
-                    Price = 130,
-                    Length = 180,
-                    Description = "Slipknow finaly arrives to Sweden, get your tickets now",
-                    ConcertGenres = new List<ConcertGenres>()
+                    Venue = "Venue 1",
+                    DateTime = DateTime.Now,
+
+                }, new Show{
+
+                    Venue = "Venue 2",
+                    DateTime = DateTime.Now,} },
+
+                ConcertGenres = new List<ConcertGenres>()
                     {
                        new ConcertGenres { Genre = new Genre { Name = "Rock"}
                     }
                 }
-                }
             });
-            _context.Shows.Add(new Show
-            {
-                Venue = "Venue 2",
-                DateTime = DateTime.Now,
-                Concert =
-                new Concert
-                {
-                    Title = "Florence & The Machine",
-                    Price = 150,
-                    Length = 200,
-                    Description = "England baseed Florence & The Machines arrives to Sweden, get your tickets now",
-                    ConcertGenres = new List<ConcertGenres>()
-                    {
-                        new ConcertGenres {Genre = new Genre { Name = "Indie" } }
-
-                    }
-                },
-            });
+            //_context.Shows.Add(new Show
+            //{
+            //    Venue = "Venue 2",
+            //    DateTime = DateTime.Now,
+            //    Concert =
+            //    new Concert
+            //    {
+            //        Title = "Florence & The Machine",
+            //        Price = 150,
+            //        Length = 200,
+            //        Genre = "Indie",
+            //        Description = "England baseed Florence & The Machines arrives to Sweden, get your tickets now",
+            //        ConcertGenres = new List<ConcertGenres>()
+            //        {
+            //            new ConcertGenres {Genre = new Genre { Name = "Indie" } }
+            //        }
+            //    },
+            //});
             _context.SaveChanges();
 
         }

@@ -7,15 +7,6 @@ namespace WebAPI.Models
         public int GenreId { get; set; }
         public string Name { get; set; }
         public ICollection<ConcertGenres> ConcertGenres { get; set; }
-        
-        
-        
-        
-        
-        //public Genre(string name)
-        //{
-        //    Name = name;
-        //    Concerts = new List<Concert>();
-        //}
+
     }
 }

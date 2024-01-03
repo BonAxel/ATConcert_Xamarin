@@ -12,8 +12,18 @@ namespace WebAPI.Helper
             CreateMap<Show, ShowDto>();
             CreateMap<Booking, BookingDto>();
             CreateMap<BookingDto, Booking>();
+            
             CreateMap<Concert, ConcertDto>();
+            CreateMap<ConcertDto, Concert>();
+
+            CreateMap<ConcertDto, Genre>();
             CreateMap<Genre, GenreDto>();
+
+            //CreateMap<Concert, Show>();
+
+
+            CreateMap<Genre, GenreDto>();
+
 
         }
     }

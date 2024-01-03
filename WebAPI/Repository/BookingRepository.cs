@@ -28,10 +28,10 @@ namespace WebAPI.Repository
             return _context.Bookings.OrderBy(p => p.BookingId).ToList();
         }
 
-        public bool CreateBooking(int showId, Booking booking)
+        public bool CreateBooking(int concertId, Booking booking)
         {
-            var show = _context.Shows.Where(a => a.ShowId == showId).FirstOrDefault();
-            booking.Show = show;
+            var show = _context.Concerts.Where(a => a.ConcertId == concertId).FirstOrDefault();
+            booking.Concert = show;
             _context.Add(booking);
             return Save();
         }

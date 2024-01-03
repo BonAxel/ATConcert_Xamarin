@@ -1,19 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ATConcert.Views.ConcertDetailsPage">
-    <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Title:" FontSize="Medium"></Label>
-            <Label Text="{Binding Title}" FontSize="Medium" />
-            <Label Text="Description:" FontSize="Medium" />
-            <Label Text="{Binding Description}" />
-            <Label Text="Length:" FontSize="Medium" />
-            <Label Text="{Binding Length}" />
-            <Label Text="Price:" FontSize="Medium" />
-            <Label Text="{Binding Price}" />
-            <Button Text="Boka" Command="{Binding BookCommand}" />
-            <Button Text="Avboka" Command="{Binding CancelBookingCommand}" IsVisible="{Binding IsBooked}" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="ATConcert.Views.ConcertDetailsPage"
+             xmlns:model="clr-namespace:ATConcert.Models"
+             xmlns:local="clr-namespace:ATConcert.ViewModels"  
+
+             >
+    <ContentPage.Title>
+        <Binding Path="Title"></Binding>
+    </ContentPage.Title>
+    <RefreshView Command="{Binding LoadConcertCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ConcertListView"
+            ItemsSource="{Binding Shows}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:Show">
+                        <Label Text="{Binding Venue}" 
+                        LineBreakMode="NoWrap" 
+                        Style="{DynamicResource ListItemTextStyle}" 
+                        FontSize="16" />
+                        <Label Text="{Binding DateTime}" 
+                        LineBreakMode="NoWrap"
+                        Style="{DynamicResource ListItemDetailTextStyle}"
+                        FontSize="13" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                            NumberOfTapsRequired="1"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:ConcertDetailsViewModel}}, Path=ConcertTapped}"		
+                            CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>

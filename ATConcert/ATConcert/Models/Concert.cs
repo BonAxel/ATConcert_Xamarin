@@ -12,7 +12,11 @@ namespace ATConcert.Models
         public float Price { get; set; }
         public int Length { get; set; }
         public string Description { get; set; }
-        //public ICollection<ConcertGenres> ConcertGenres { get; set; }
-        //public ICollection<Show> Shows { get; set; }
+
+
+        public ICollection<Show> Show { get; set; }
+        public ICollection<ConcertGenres> ConcertGenres { get; set; }
+
+
     }
 }

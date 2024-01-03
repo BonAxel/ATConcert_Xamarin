@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATConcert.Services
+namespace ATConcert.Services.@interface
 {
     public interface IRestApiDataStore<T>
     {

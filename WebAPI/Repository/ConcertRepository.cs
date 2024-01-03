@@ -21,12 +21,12 @@ namespace WebAPI.Repository
 
         public Concert GetConcert(int id)
         {
-            return _context.Concerts.Where(e => e.ConcertId == id).FirstOrDefault();
+            return _context.Concerts.Where(e => e.ConcertId == id).Include(a => a.Show).Include(a => a.Genre).FirstOrDefault();
         }
 
         public ICollection<Concert> GetConcerts()
         {
-            return _context.Concerts.ToList();
+            return _context.Concerts.Include(a => a.Show).Include(a => a.ConcertGenres).ThenInclude(a => a.Genre).ToList();
         }
     }
 }

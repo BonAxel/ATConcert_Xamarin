@@ -12,13 +12,13 @@ namespace WebAPI.Controllers
     {
         private readonly IBookingRepository _bookingRepository;
         private readonly IMapper _mapper;
-        private readonly IShowRepository _showRepository;
+        private readonly IConcertRepository _concertRepository;
 
-        public BookingController(IBookingRepository bookingRepository, IMapper mapper, IShowRepository showRepository)
+        public BookingController(IBookingRepository bookingRepository, IMapper mapper, IConcertRepository concertRepository)
         {
             _bookingRepository = bookingRepository;
             _mapper = mapper;
-            _showRepository = showRepository;
+            _concertRepository = concertRepository;
         }
 
 
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             var bookingMap = _mapper.Map<Booking>(bookingCreate);
 
-            bookingMap.Show = _showRepository.GetShow(showId);
+            bookingMap.Concert = _concertRepository.GetConcert(showId);
 
 
             if (!_bookingRepository.CreateBooking(showId, bookingMap))
