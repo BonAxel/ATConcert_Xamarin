@@ -1,14 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:model="clr-namespace:ATConcert.Models"
              x:Class="ATConcert.Views.BookingPage">
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Entry x:Name="CustomerNameEntry"
-               Placeholder="Ditt namn" />
-            <Entry x:Name="CustomerEmailEntry"
-               Placeholder="Din e-post" Keyboard="Email" />
-            <Button Text="Bekräfta bokning" Command="{Binding ConfirmBookingCommand}" />
+            <StackLayout>
+                <Entry x:Name="SearchBooking" Text="{Binding Searchstring}"
+                   Placeholder="Sök Bokningsnummer" />
+                <Button Text="Sök" Command="{Binding SearchForBooking}" />
+                <Label Text="{Binding Notfound}" />
+            </StackLayout>
+
+            <CollectionView x:Name="BookingsListView"
+                ItemsSource="{Binding Bookings}"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" x:DataType="model:Booking">
+                            <Label Text="{Binding BookingId}" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="16" />
+                            <Label Text="{Binding CustomerName}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                            <Label Text="{Binding CustomerEmail}" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="16" />
+                            <Label Text="{Binding Show}" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="16" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

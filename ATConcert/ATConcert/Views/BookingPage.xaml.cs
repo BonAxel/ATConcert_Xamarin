@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ATConcert.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,11 @@ namespace ATConcert.Views
         public BookingPage()
         {
             InitializeComponent();
+            BindingContext = new BookingViewModel();
+
         }
     }
 }
+
+
+ 
