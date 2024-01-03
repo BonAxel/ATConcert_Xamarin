@@ -21,7 +21,7 @@ namespace WebAPI.Repository
 
         public Concert GetConcert(int id)
         {
-            return _context.Concerts.Where(e => e.ConcertId == id).Include(a => a.Show).Include(a => a.Genre).FirstOrDefault();
+            return _context.Concerts.Where(e => e.ConcertId == id).Include(a => a.Show).FirstOrDefault();
         }
 
         public ICollection<Concert> GetConcerts()

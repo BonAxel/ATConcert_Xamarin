@@ -38,7 +38,7 @@ namespace ATConcert.Services
 
         public async Task<Concert> GetConcertAsync(string id)
         {
-            var response = await httpClient.GetAsync($"{ApiBaseUrl}/{id}");
+            var response = await httpClient.GetAsync($"https://10.0.2.2:7298/api/Concert/GetConcert/{id}");
 
             if (response.IsSuccessStatusCode)
             {

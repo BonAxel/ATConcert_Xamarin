@@ -4,14 +4,13 @@
              x:Class="ATConcert.Views.ConcertDetailsPage"
              xmlns:model="clr-namespace:ATConcert.Models"
              xmlns:local="clr-namespace:ATConcert.ViewModels"  
-
              >
     <ContentPage.Title>
-        <Binding Path="Title"></Binding>
+        {Binding Title}
     </ContentPage.Title>
     <RefreshView Command="{Binding LoadConcertCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="ConcertListView"
-            ItemsSource="{Binding Shows}"
+            ItemsSource="{Binding ConcertShows}"
             SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

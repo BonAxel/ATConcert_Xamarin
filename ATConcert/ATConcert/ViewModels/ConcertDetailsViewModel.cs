@@ -1,5 +1,7 @@
 ﻿using ATConcert.Models;
 using ATConcert.Services;
+using ATConcert.Services.Interfaces;
+using ATConcert.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,110 +13,91 @@ using Xamarin.Forms;
 
 namespace ATConcert.ViewModels
 {
-    class ConcertDetailsViewModel
+    [QueryProperty(nameof(ConcertId), nameof(ConcertId))]
+    public class ConcertDetailsViewModel : BaseViewModel
     {
+        public ShowRestApiDataStore _showRestApiDataStore;
+        public ConcertRestApiDataStore _concertRestApiDataStore;
 
-        [QueryProperty(nameof(Concert), nameof(Concert))]
-        public class ConcertDetailViewModel : BaseViewModel
+
+        public Command<Show> ShowTapped { get; }
+
+
+        public ObservableCollection<Show> ConcertShows { get; }
+        private string concertId;
+        private string text;
+        private string description;
+        //private ObservableCollection<Show> concertShows = new ObservableCollection<Show>();
+        private string title;
+        public int Id { get; set; }
+
+        public string ConcertId
         {
-
-            public ObservableCollection<Show> ConcertShows { get; }
-            private string concertId;
-            private string text;
-            private string description;
-            //private ObservableCollection<Show> concertShows = new ObservableCollection<Show>();
-            private string title;
-            public int Id { get; set; }
-
-            private string _serializedConcert;
-
-            public ConcertDetailViewModel()
+            get
             {
-                ConcertShows = new ObservableCollection<Show>();
+                return concertId;
             }
-
-            public string SerializedConcert
+            set
             {
-                get => _serializedConcert;
-                set
-                {
-                    SetProperty(ref _serializedConcert, value);
-                    Concert = JsonConvert.DeserializeObject<Concert>(value);
-                }
+                concertId = value;
+                LoadItemId(value);
             }
+        }
 
-            private Concert _concert;
+        public ConcertDetailsViewModel()
+        {
+            ConcertShows = new ObservableCollection<Show>();
+            _concertRestApiDataStore = new ConcertRestApiDataStore();
+            _showRestApiDataStore = new ShowRestApiDataStore();
+            ShowTapped = new Command<Show>(OnShowSelected);
+        }
 
-            public Concert Concert
+
+        private Concert _concert;
+
+        public Concert Concert
+        {
+            get => _concert;
+            set => SetProperty(ref _concert, value);
+        }
+
+
+        public string Title
+        {
+            get => title;
+            set => SetProperty(ref title, value);
+        }
+
+        public string Description
+        {
+            get => description;
+            set => SetProperty(ref description, value);
+        }
+
+        async void OnShowSelected(Show show)
+        {
+            if (show == null)
+                return;
+
+            //await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(BookingsViewModel.ShowId)}={show.ShowId}");
+        }
+
+
+        public async void LoadItemId(string concertId)
+        {
+            try
             {
-                get => _concert;
-                set => SetProperty(ref _concert, value);
-            }
-
-
-            public string Title
-            {
-                get => title;
-                set => SetProperty(ref title, value);
-            }
-
-            public string Description
-            {
-                get => description;
-                set => SetProperty(ref description, value);
-            }
-
-            public string ConcertId
-            {
-                get
+                var concert = await _concertRestApiDataStore.GetConcertAsync(ConcertId);
+                foreach (var show in concert.Show)
                 {
-                    return concertId;
-                }
-                set
-                {
-                    concertId = value;
-                    LoadItemId(value);
-                }
-            }
-
-
-            async Task ExecuteLoadConcertCommand()
-            {
-                IsBusy = true;
-
-                try
-                {
-                    ConcertShows.Clear();
-                    //Hämtar data? --OBS DENNA SKA REFRESHA HÄMTANDE AV DATA
-                    //_restApiDataStore = new RestApiDataStore();
-                    //var concertList = await _concertRestApiDataStore.GetConcertsAsync(Concert.ConcertId);
-                    foreach (var show in Concert.Show) ConcertShows.Add(show);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-                finally
-                {
-                    IsBusy = false;
+                    ConcertShows.Add(show);
                 }
             }
-
-
-            public async void LoadItemId(string concertId)
+            catch (Exception)
             {
-                try
-                {
-                    var concert = await DataStore.GetItemAsync(concertId);
-                    Id = concert.ConcertId;
-                    Title = concert.Title;
-                    Description = concert.Description;
-                }
-                catch (Exception)
-                {
-                    Debug.WriteLine("Failed to Load Item");
-                }
+                Debug.WriteLine("Failed to Load Item");
             }
         }
     }
+
 }

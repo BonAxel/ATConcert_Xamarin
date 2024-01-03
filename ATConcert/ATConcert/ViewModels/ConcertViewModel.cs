@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using ATConcert.Models.Junctions;
-using static ATConcert.ViewModels.ConcertDetailsViewModel;
 using ATConcert.Services;
-using static System.Net.Mime.MediaTypeNames;
 using Newtonsoft.Json;
+
+
 
 namespace ATConcert.ViewModels
 {
@@ -29,7 +29,7 @@ namespace ATConcert.ViewModels
         {
             Title = "Concerts";
             Concerts = new ObservableCollection<Concert>();
-            
+
             _concertRestApiDataStore = new ConcertRestApiDataStore();
             LoadConcertCommand = new Command(async () => await ExecuteLoadConcertCommand());
             ConcertTapped = new Command<Concert>(OnConcertSelected);
@@ -59,9 +59,9 @@ namespace ATConcert.ViewModels
             string serializedConcert = JsonConvert.SerializeObject(concert);
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.SerializedConcert)}={serializedConcert}");
+            //await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.SerializedConcert)}={serializedConcert}");
 
-            //await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.ConcertId)}={concert.ConcertId}");
+            await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailsViewModel.ConcertId)}={concert.ConcertId}");
         }
 
 
