@@ -10,7 +10,7 @@ namespace WebAPI.Models
         public string Description { get; set; }
         public int Length { get; set; }
         public float Price { get; set; }
-        public string Genre { get; set; }
+        public string[] Genre { get; set; }
 
 
         public ICollection<Booking> Bookings { get; set; }

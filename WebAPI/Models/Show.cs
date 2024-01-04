@@ -7,9 +7,6 @@ namespace WebAPI.Models
         public int ShowId { get; set; }
         public string Venue { get; set; }
         public DateTime DateTime { get; set; }
-
-        [JsonIgnore]
-        public Concert Concert { get; set; }
         
     }
 }

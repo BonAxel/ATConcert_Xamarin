@@ -1,4 +1,5 @@
 ﻿using WebAPI.Data;
+using WebAPI.Dto;
 using WebAPI.Interface;
 using WebAPI.Models;
 
@@ -28,10 +29,12 @@ namespace WebAPI.Repository
             return _context.Bookings.OrderBy(p => p.BookingId).ToList();
         }
 
-        public bool CreateBooking(int concertId, Booking booking)
+        public bool CreateBooking(Booking booking)
         {
-            var show = _context.Concerts.Where(a => a.ConcertId == concertId).FirstOrDefault();
-            booking.Concert = show;
+            //var show = _context.Shows.Where(a => a.ShowId == showId).FirstOrDefault();
+            //if (show == null) return false;
+
+            //booking.Show = show;
             _context.Add(booking);
             return Save();
         }

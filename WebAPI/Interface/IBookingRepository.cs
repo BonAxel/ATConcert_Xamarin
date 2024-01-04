@@ -1,4 +1,5 @@
-﻿using WebAPI.Models;
+﻿using WebAPI.Dto;
+using WebAPI.Models;
 
 namespace WebAPI.Interface
 {
@@ -8,7 +9,7 @@ namespace WebAPI.Interface
         Booking GetBooking(int id);
         bool BookingExists(int id);
 
-        bool CreateBooking(int showId, Booking booking);
+        bool CreateBooking(Booking booking);
 
         bool Save();
     }

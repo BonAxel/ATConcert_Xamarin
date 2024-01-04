@@ -23,6 +23,8 @@ namespace ATConcert.Views
             InitializeComponent();
             BindingContext = _viewModel  = new ConcertViewModel();
 
+
+
         }
     }
 }

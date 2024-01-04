@@ -25,34 +25,7 @@ namespace ATConcert.Services
             };
         }
 
-        public async Task<Show> GetConcertAsync(string id)
-        {
-            var response = await httpClient.GetAsync($"{ApiBaseUrl}/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Show>(content);
-            }
-
-            return null;
-        }
-
-
-        public async Task<IEnumerable<Show>> GetConcertsAsync(bool forceRefresh = false)
-        {
-
-            var response = await httpClient.GetAsync($"https://10.0.2.2:7298/api/Concert/GetConcerts");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<Show>>(content);
-            }
-
-            return null;
-        }
-
+        
 
         public HttpClientHandler GetInsecureHandler()
         {
@@ -64,6 +37,24 @@ namespace ATConcert.Services
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
             return handler;
+        }
+
+        public async Task<Show> GetShowAsync(string id)
+        {
+            var response = await httpClient.GetAsync($"https://10.0.2.2:7298/api/Show/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Show>(content);
+            }
+
+            return null;
+        }
+
+        public Task<IEnumerable<Show>> GetShowAsync(bool forceRefresh = false)
+        {
+            throw new NotImplementedException();
         }
     }
 }

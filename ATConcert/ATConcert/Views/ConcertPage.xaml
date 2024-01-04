@@ -3,32 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:model="clr-namespace:ATConcert.Models"
              xmlns:local="clr-namespace:ATConcert.ViewModels"  
-             x:Class="ATConcert.Views.ConcertPage">
-    <RefreshView Command="{Binding LoadConcertCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ConcertListView"
+             x:Class="ATConcert.Views.ConcertPage"
+             >
+    <ContentPage.Title>
+        <Binding Path="Title" />
+    </ContentPage.Title>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="Sök"
+            Priority="0"
+            Order="Primary"
+            Command="{Binding SearchGenre}" />
+    </ContentPage.ToolbarItems>
+    <StackLayout>
+        <Picker x:Name="GenrePicker" ItemsSource="{Binding FilteredGenre}" SelectedItem="{Binding SelectedGenre, Mode=TwoWay}" />
+
+        <RefreshView Command="{Binding LoadConcertCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="ConcertListView"
                 ItemsSource="{Binding Concerts}"
                 SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Concert">
-                        <Label Text="{Binding Title}" 
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" x:DataType="model:Concert">
+                            <Label Text="{Binding Title}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
-                        <Label Text="{Binding Description}" 
+                            <Label Text="{Binding Description}" 
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer 
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:ConcertViewModel}}, Path=ConcertTapped}"		
                                 CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
 </ContentPage>

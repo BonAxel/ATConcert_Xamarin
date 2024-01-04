@@ -16,6 +16,7 @@ namespace ATConcert.Views
         public ConcertDetailsPage()
         {
             InitializeComponent();
+
             BindingContext = new ConcertDetailsViewModel();
 
         }

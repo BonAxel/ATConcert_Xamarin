@@ -8,7 +8,7 @@ namespace ATConcert.Services.Interfaces
     interface IShowRestApiDataStore<T>
     {
 
-        Task<T> GetConcertAsync(string id);
-        Task<IEnumerable<T>> GetConcertsAsync(bool forceRefresh = false);
+        Task<T> GetShowAsync(string id);
+        Task<IEnumerable<T>> GetShowAsync(bool forceRefresh = false);
     }
 }

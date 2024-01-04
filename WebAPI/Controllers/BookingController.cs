@@ -38,33 +38,17 @@ namespace WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateBooking([FromQuery] int showId, [FromBody] BookingDto bookingCreate)
+        public IActionResult CreateBooking([FromBody] Booking bookingCreate)
         {
             if (bookingCreate == null) return BadRequest();
 
-            var booking = _bookingRepository.GetBookings().Where(c => c.BookingId == bookingCreate.BookingId).FirstOrDefault();
-
-            if (booking != null)
-            {
-                ModelState.AddModelError("", "Booking already exists");
-                return StatusCode(422, ModelState);
-
-
-            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var bookingMap = _mapper.Map<Booking>(bookingCreate);
+            _bookingRepository.CreateBooking(bookingCreate);
 
-            bookingMap.Concert = _concertRepository.GetConcert(showId);
-
-
-            if (!_bookingRepository.CreateBooking(showId, bookingMap))
-            {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
-            }
+            //bookingMap.Concert = _concertRepository.GetConcert(showId);
             return Ok("Succesfully created");
 
         }

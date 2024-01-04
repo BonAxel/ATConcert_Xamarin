@@ -20,15 +20,6 @@ namespace ATConcert.ViewModels
         public ObservableCollection<Booking> Bookings { get; }
 
 
-        private string showId;
-
-        public string ShowId
-        {
-            get => showId;
-            set => SetProperty(ref showId, value);
-        }
-
-
 
 
 
@@ -48,20 +39,17 @@ namespace ATConcert.ViewModels
         {
             await ExecuteLoadBookingCommand();
         }
+
+
+
         //PROPERTY
-    
-
-
         async void OnSearchTap(Booking booking)
         {
             if (booking == null)
                 return;
-
-            string serializedConcert = JsonConvert.SerializeObject(booking);
-
             // This will push the ItemDetailPage onto the navigation stack
 
-            //KOMMENTERADE UT DENNA
+
             //await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.SerializedConcert)}={serializedConcert}");
 
             //await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailViewModel.ConcertId)}={concert.ConcertId}");

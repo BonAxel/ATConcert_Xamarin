@@ -1,12 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ATConcert.Views.CreateBookingPage">
+             x:Class="ATConcert.Views.CreateBookingPage"
+             xmlns:model="clr-namespace:ATConcert.Models"
+             xmlns:local="clr-namespace:ATConcert.ViewModels">
+    <ContentPage.Title>
+        <Binding Path="Title" />
+    </ContentPage.Title>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        
+        <StackLayout Spacing="3" Padding="15">
+            <Entry x:Name="CustomerName" Text="{Binding CustomerName}"
+                   Placeholder="Namn" />
+            <Entry x:Name="CustomerEmail" Text="{Binding CustomerMail}"
+                       Placeholder="Email" />
+            <CollectionView x:Name="ConcertListView"
+            ItemsSource="{Binding Show}"
+            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" x:DataType="model:Show">
+                            <Label Text="{Binding Venue}" 
+                        LineBreakMode="NoWrap" 
+                        Style="{DynamicResource ListItemTextStyle}" 
+                        FontSize="16" />
+                            <Label Text="{Binding DateTime}" 
+                        LineBreakMode="NoWrap"
+                        Style="{DynamicResource ListItemDetailTextStyle}"
+                        FontSize="13" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
+                            NumberOfTapsRequired="1"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:CreateBookingViewModel}}, Path=ShowTapped}"		
+                            CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Complete" Command="{Binding CompleteBookingCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
