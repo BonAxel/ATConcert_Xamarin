@@ -95,6 +95,28 @@ namespace WebAPI.Data.Seed
                     }
                 },
             });
+
+            _context.SaveChanges();
+
+            _context.Bookings.Add(new Booking
+            {
+                CustomerName = "Johan Eriksson",
+                CustomerEmail = "Johan@gmai.com",
+                ShowId = 1,
+
+            });
+            _context.Add(new Booking
+            {
+                CustomerName = "Adam Johansson",
+                CustomerEmail = "Adam@gmai.com",
+                ShowId = 1,
+            });
+            _context.Add(new Booking
+            {
+                CustomerName = "Markus Omar",
+                CustomerEmail = "Markus@gmai.com",
+                ShowId = 1,
+            });
             _context.SaveChanges();
 
         }

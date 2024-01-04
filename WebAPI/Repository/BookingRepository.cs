@@ -2,6 +2,8 @@
 using WebAPI.Dto;
 using WebAPI.Interface;
 using WebAPI.Models;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Repository
 {
@@ -14,14 +16,14 @@ namespace WebAPI.Repository
             _context = context;
         }
 
-        public bool BookingExists(int id)
+        public bool BookingExists(string customerName)
         {
-            return _context.Bookings.Any(p => p.BookingId == id);
+            return _context.Bookings.Any(p => p.CustomerName == customerName);
         }
 
-        public Booking GetBooking(int id)
+        public Booking GetBooking(string customerName)
         {
-            return _context.Bookings.Where(p => p.BookingId == id).FirstOrDefault();
+            return _context.Bookings.Where(p => p.CustomerName == customerName).Include(a => a.Show).FirstOrDefault();
         }
 
         public ICollection<Booking> GetBookings()
@@ -31,10 +33,8 @@ namespace WebAPI.Repository
 
         public bool CreateBooking(Booking booking)
         {
-            //var show = _context.Shows.Where(a => a.ShowId == showId).FirstOrDefault();
-            //if (show == null) return false;
-
-            //booking.Show = show;
+            booking.ShowId = booking.Show.ShowId;
+            booking.Show = null;
             _context.Add(booking);
             return Save();
         }
@@ -45,5 +45,12 @@ namespace WebAPI.Repository
             return saved > 0 ? true : false;
         }
 
+        public bool DeleteBooking(int id)
+        {
+            var result = _context.Bookings.FirstOrDefault(a => a.BookingId == id);
+            if (result == null) return false;
+            _context.Remove(result);
+            return Save();
+        }
     }
 }

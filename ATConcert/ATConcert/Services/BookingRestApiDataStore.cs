@@ -21,25 +21,57 @@ namespace ATConcert.Services
             {
                 BaseAddress = ApiBaseUrl
             };
-
         }
 
-        public Task<bool> DeleteBookingAsync(string id)
+        public async Task<bool> DeleteBookingAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await httpClient.DeleteAsync($"https://10.0.2.2:7298/api/Booking/DeleteBookiun/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"Error removing booking. Status code: {response.StatusCode}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error removing booking: {ex.Message}");
+                return false;
+            }
         }
 
-        public Task<IEnumerable<Booking>> GetBookingsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<Booking>> GetBookingsAsync(bool forceRefresh = false)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.GetAsync($"https://10.0.2.2:7298/api/Booking/GetBookings");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Booking>>(content);
+            }
+            return null;
         }
 
-        public Task<Booking> GetBookingtAsync(string id)
+        public async Task<Booking> GetBookingtAsync(string CustomerName)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.GetAsync($"https://10.0.2.2:7298/api/Booking/GetBooking/{CustomerName}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Booking>(content);
+            }
+
+            return null;
         }
 
-        public Task<bool> UpdateBookingAsync(Booking item)
+        public async  Task<bool> UpdateBookingAsync(Booking item)
         {
             throw new NotImplementedException();
         }

@@ -9,7 +9,7 @@ namespace ATConcert.Services
     {
         Task<bool> AddBookingAsync(T item);
         Task<bool> UpdateBookingAsync(T item);
-        Task<bool> DeleteBookingAsync(string id);
+        Task<bool> DeleteBookingAsync(int id);
         Task<T> GetBookingtAsync(string id);
         Task<IEnumerable<T>> GetBookingsAsync(bool forceRefresh = false);
     }

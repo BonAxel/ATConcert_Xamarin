@@ -30,7 +30,6 @@ namespace ATConcert.ViewModels
         public Command<Concert> ConcertTapped { get; }
         public Command<string> SearchGenre { get; }
 
-
         public ConcertViewModel()
         {
             Title = "Concerts";
@@ -65,13 +64,11 @@ namespace ATConcert.ViewModels
             } 
         }
 
-
         async void OnGenreSelected(string genre)
         {
             try
             {
                 Concerts.Clear();
-                //FilteredGenre.Clear();
                 if (genre == null)
                     return;
 
@@ -97,20 +94,17 @@ namespace ATConcert.ViewModels
             }
         }
 
-
         public async void LoadDataInitialy()
         {
             Concerts.Clear();
             await ExecuteLoadConcertCommand(null);
         }
 
-
         public void OnAppearing()
         {
             IsBusy = true;
             SelectedConcert = null;
         }
-
 
         async void OnConcertSelected(Concert concert)
         {
@@ -119,7 +113,6 @@ namespace ATConcert.ViewModels
 
             await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailsViewModel.ConcertId)}={concert.ConcertId}");
         }
-
 
         //METHODS
         async Task ExecuteLoadConcertCommand(string genre)

@@ -24,6 +24,7 @@ namespace ATConcert.ViewModels
    
         public CreateBookingViewModel()
         {
+            Message = string.Empty;
             Show = new ObservableCollection<Show>();
             _bookingRestApiDataStore = new BookingRestApiDataStore();
             _showRestApiDataStore = new ShowRestApiDataStore();
@@ -55,9 +56,24 @@ namespace ATConcert.ViewModels
                 CustomerName = CustomerName,
                 Show = BookedShow
             };
-          var concertList = await _bookingRestApiDataStore.AddBookingAsync(newBooking);
+           var concertList = await _bookingRestApiDataStore.AddBookingAsync(newBooking);
+            if (concertList == true)
+            {
+                Message = "Booking succeded!";
+            }
+            else
+            {
+                Message = "Booking failed, try again";
+            }
         }
 
+        private string message;
+
+        public string Message
+        {
+            get => message;
+            set => SetProperty(ref message, value);
+        }
 
         private string customerMail;
 

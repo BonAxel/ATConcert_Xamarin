@@ -21,7 +21,19 @@ namespace WebAPI.Controllers
             _concertRepository = concertRepository;
         }
 
+        [HttpGet("{customerName}")]
+        [ProducesResponseType(200, Type = typeof(Booking))]
+        [ProducesResponseType(400)]
+        public IActionResult GetBooking(string customerName)
+        {
+            if (!_bookingRepository.BookingExists(customerName)) return NotFound();
 
+            var booking = _mapper.Map<Booking>(_bookingRepository.GetBooking(customerName));
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return Ok(booking);
+        }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Booking>))]
@@ -48,9 +60,19 @@ namespace WebAPI.Controllers
             }
             _bookingRepository.CreateBooking(bookingCreate);
 
-            //bookingMap.Concert = _concertRepository.GetConcert(showId);
             return Ok("Succesfully created");
 
+        }
+
+        [HttpDelete("{bookingId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult DeleteBookiun(int bookingId)
+        {
+            var categories = _bookingRepository.DeleteBooking(bookingId);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return Ok("Succesfully deleted");
         }
     }
 }

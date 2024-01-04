@@ -1,42 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:model="clr-namespace:ATConcert.Models"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:model="clr-namespace:ATConcert.Models"
+             xmlns:local="clr-namespace:ATConcert.ViewModels"
              x:Class="ATConcert.Views.BookingPage">
+
     <ContentPage.Content>
         <StackLayout Padding="10">
             <StackLayout>
                 <Entry x:Name="SearchBooking" Text="{Binding Searchstring}"
-                   Placeholder="Sök Bokningsnummer" />
+                   Placeholder="Sök namn" />
                 <Button Text="Sök" Command="{Binding SearchForBooking}" />
                 <Label Text="{Binding Notfound}" />
             </StackLayout>
 
             <CollectionView x:Name="BookingsListView"
                 ItemsSource="{Binding Bookings}"
-                SelectionMode="None">
+                SelectedItem="{Binding SelectedBooking}"
+                SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10" x:DataType="model:Booking">
-                            <Label Text="{Binding BookingId}" 
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
-                            <Label Text="{Binding CustomerName}" 
-                                LineBreakMode="NoWrap"
-                                Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13" />
-                            <Label Text="{Binding CustomerEmail}" 
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
-                            <Label Text="{Binding Show}" 
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="ID: " Style="{DynamicResource ListItemLabelStyle}" FontSize="16" />
+                                <Label Text="{Binding BookingId}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Name: " Style="{DynamicResource ListItemLabelStyle}" FontSize="16" />
+                                <Label Text="{Binding CustomerName}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Email: " Style="{DynamicResource ListItemLabelStyle}" FontSize="16" />
+                                <Label Text="{Binding CustomerEmail}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                            </StackLayout>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Total Seats booked: " Style="{DynamicResource ListItemLabelStyle}" FontSize="16" />
+                <Label Text="{Binding AmountBookedShow}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel Booking" Command="{Binding CancelBooking}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

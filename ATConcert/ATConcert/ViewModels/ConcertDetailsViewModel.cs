@@ -60,7 +60,6 @@ namespace ATConcert.ViewModels
             set => SetProperty(ref _concert, value);
         }
 
-
         public string Description
         {
             get => description;
