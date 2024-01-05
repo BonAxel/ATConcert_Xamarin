@@ -19,7 +19,6 @@ namespace WebAPI.Helper
             CreateMap<ConcertDto, Genre>();
             CreateMap<Genre, GenreDto>();
 
-            //CreateMap<Concert, Show>();
 
 
             CreateMap<Genre, GenreDto>();

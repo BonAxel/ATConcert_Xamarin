@@ -14,8 +14,8 @@ namespace ATConcert
             Routing.RegisterRoute(nameof(ConcertDetailsPage), typeof(ConcertDetailsPage));
             Routing.RegisterRoute(nameof(CreateBookingPage), typeof(CreateBookingPage));
 
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            //Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            //Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

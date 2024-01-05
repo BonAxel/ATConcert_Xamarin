@@ -33,39 +33,6 @@ namespace ATConcert.ViewModels
 
         }
 
-        public async void LoadShowInitialy()
-        {          
-            LoadSelectedShow();
-        }
-
-        public async void LoadSelectedShow()
-        {
-            if (Show == null) return;
-            Show.Clear();
-
-            var show = await _showRestApiDataStore.GetShowAsync(ShowId);
-            if (show == null) return;
-            Show.Add(show);
-
-        }
-
-        async Task CompleteBooking()
-        {
-            Booking newBooking = new Booking() {
-                CustomerEmail = CustomerMail,
-                CustomerName = CustomerName,
-                Show = BookedShow
-            };
-           var concertList = await _bookingRestApiDataStore.AddBookingAsync(newBooking);
-            if (concertList == true)
-            {
-                Message = "Booking succeded!";
-            }
-            else
-            {
-                Message = "Booking failed, try again";
-            }
-        }
 
         private string message;
 
@@ -120,6 +87,8 @@ namespace ATConcert.ViewModels
             }
         }
 
+
+        //METHODS
         public async void LoadShowId(string showId)
         {
             try
@@ -135,5 +104,42 @@ namespace ATConcert.ViewModels
                 Debug.WriteLine("Failed to Load Item");
             }
         }
+
+
+        public async void LoadShowInitialy()
+        {
+            LoadSelectedShow();
+        }
+
+        public async void LoadSelectedShow()
+        {
+            if (Show == null) return;
+            Show.Clear();
+
+            var show = await _showRestApiDataStore.GetShowAsync(ShowId);
+            if (show == null) return;
+            Show.Add(show);
+
+        }
+
+        async Task CompleteBooking()
+        {
+            Booking newBooking = new Booking()
+            {
+                CustomerEmail = CustomerMail,
+                CustomerName = CustomerName,
+                Show = BookedShow
+            };
+            var concertList = await _bookingRestApiDataStore.AddBookingAsync(newBooking);
+            if (concertList == true)
+            {
+                Message = "Booking succeded!";
+            }
+            else
+            {
+                Message = "Booking failed, try again";
+            }
+        }
+
     }
 }

@@ -64,55 +64,7 @@ namespace ATConcert.ViewModels
             } 
         }
 
-        async void OnGenreSelected(string genre)
-        {
-            try
-            {
-                Concerts.Clear();
-                if (genre == null)
-                    return;
 
-                var concertList = await _concertRestApiDataStore.GetConcertsAsync();
-                List<Concert> concertsToAdd = new List<Concert>();
-
-                foreach (var concert in concertList)
-                {
-                    if (concert.Genre != null && concert.Genre.Contains(genre))
-                    {
-                        concertsToAdd.Add(concert);
-                    }
-                }
-                foreach (var concert in concertsToAdd) Concerts.Add(concert);
-            }
-            catch   (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-
-            }
-        }
-
-        public async void LoadDataInitialy()
-        {
-            Concerts.Clear();
-            await ExecuteLoadConcertCommand(null);
-        }
-
-        public void OnAppearing()
-        {
-            IsBusy = true;
-            SelectedConcert = null;
-        }
-
-        async void OnConcertSelected(Concert concert)
-        {
-            if (concert == null)
-                return;
-
-            await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailsViewModel.ConcertId)}={concert.ConcertId}");
-        }
 
         //METHODS
         async Task ExecuteLoadConcertCommand(string genre)
@@ -148,5 +100,57 @@ namespace ATConcert.ViewModels
                 IsBusy = false;
             }
         }
+
+        public async void LoadDataInitialy()
+        {
+            Concerts.Clear();
+            await ExecuteLoadConcertCommand(null);
+        }
+
+        public void OnAppearing()
+        {
+            IsBusy = true;
+            SelectedConcert = null;
+        }
+
+        async void OnConcertSelected(Concert concert)
+        {
+            if (concert == null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(ConcertDetailsPage)}?{nameof(ConcertDetailsViewModel.ConcertId)}={concert.ConcertId}");
+        }
+
+        async void OnGenreSelected(string genre)
+        {
+            try
+            {
+                Concerts.Clear();
+                if (genre == null)
+                    return;
+
+                var concertList = await _concertRestApiDataStore.GetConcertsAsync();
+                List<Concert> concertsToAdd = new List<Concert>();
+
+                foreach (var concert in concertList)
+                {
+                    if (concert.Genre != null && concert.Genre.Contains(genre))
+                    {
+                        concertsToAdd.Add(concert);
+                    }
+                }
+                foreach (var concert in concertsToAdd) Concerts.Add(concert);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+
+            }
+        }
+
+
     }
 }

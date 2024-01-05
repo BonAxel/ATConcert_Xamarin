@@ -81,20 +81,11 @@
     <FlyoutItem Title="About" Icon="icon_about.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Browse" Icon="icon_feed.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
-    </FlyoutItem>
     <FlyoutItem Title="Booking" Icon="icon_feed.png">
         <ShellContent Route="BookingPage" ContentTemplate="{DataTemplate local:BookingPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Concerts" Icon="icon_feed.png">
         <ShellContent Route="ConcertPage" ContentTemplate="{DataTemplate local:ConcertPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="ConcertDetails" Icon="icon_feed.png">
-        <ShellContent Route="ConcertDetailsPage" ContentTemplate="{DataTemplate local:ConcertDetailsPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Genrefilter" Icon="icon_feed.png">
-        <ShellContent Route="GenreFilterPage" ContentTemplate="{DataTemplate local:GenreFilterPage}" />
     </FlyoutItem>
 
 

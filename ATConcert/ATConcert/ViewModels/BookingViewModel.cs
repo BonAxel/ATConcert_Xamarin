@@ -60,9 +60,8 @@ namespace ATConcert.ViewModels
             }
         }
 
+
         //PROPERTY
-
-
         async Task CancelSearchedBooking()
         {
             var response = await _bookingRestApiDataStore.DeleteBookingAsync(SelectedBooking.BookingId);
